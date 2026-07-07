@@ -59,3 +59,8 @@ To reproduce the optimization metrics locally, follow these steps:
 2. Build the optimized container target:
    ```bash
    docker build -t my-go-service:optimized .
+
+ ---
+**Root Certificate Authorities (SSL/TLS)**: An empty scratch layer does not contain CA certificates. If the app communicates with external HTTPS APIs, root certificates must be copied explicitly from the builder (/etc/ssl/certs/ca-certificates.crt).
+
+**Privilege Escalation Prevention**: By default, containers run as root. Future iterations will focus on defining a non-root POSIX user account within the Alpine builder layer and passing ownership (USER 10001) to the final binary step to enforce the Principle of Least Privilege.
